@@ -29,7 +29,8 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 "author text," +
                 "price real," +
                 "pages integer," +
-                "name text)";
+                "name text," +
+                "categoty_id integer)";
 
     private static final String CREATE_CATEGORY = "create table Category(" +
                 "id integer primary key autoincrement," +
@@ -64,16 +65,25 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
     /**
      * 当传入的数据库版本号大于旧版本号时执行，更新数据库。
+     * 用Switch去判断旧版本号，做相应操作，在switch中所有case里面都没有break,做到每个新版本的升级操作都执行了。
      * @param sqLiteDatabase
      * @param oldVersion    旧版本号
      * @param newVersion    新版本号
      */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        //先删除表
-        sqLiteDatabase.execSQL("drop table if exists Book");
-        sqLiteDatabase.execSQL("drop table if exists Category");
-        onCreate(sqLiteDatabase);
+//        //先删除表
+//        sqLiteDatabase.execSQL("drop table if exists Book");
+//        sqLiteDatabase.execSQL("drop table if exists Category");
+        switch (oldVersion){
+            case 1:
+                //创建表
+                sqLiteDatabase.execSQL(CREATE_CATEGORY);
+            case 2:
+                //在Book表中添加字段
+                sqLiteDatabase.execSQL("alter table Book add column categoty_id integer");
+            default:
+        }
         Log.i("asd","更新了数据库");
     }
 
