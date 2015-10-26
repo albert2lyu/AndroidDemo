@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.squareup.okhttp.CacheControl;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -13,10 +14,19 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String URL = "http://news-at.zhihu.com/api/4/news/latest";
+//    private final String URL = "http://news-at.zhihu.com/api/4/news/latest";
+
+
+    private final String URL = "http://nfarmapitest.vegnet.cn/Users/SearchLogin";
+
+    //网页接口秘钥
+    public final static String UserId = "A6971118873561";
+    public final static String UserPassword= UserId + "UZ" + "8C757B31-A896-F477-C46D-4E27E05528D3" + "UZ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,21 +35,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void doGet(View v) {
-        notInUIThread(URL);
-    }
-
     /**
      * 异步的请求
-     * @param url
+     * @param v
      */
-    private void notInUIThread(String url){
+    public void doGet(View v){
         Request request = new Request.Builder()
-                .url(url)
+                .url("https://github.com/square/okhttp/blob/master/README.md")
                 .build();
-
         Call call = MyAppliction.getOkHttpClient().newCall(request);
-
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -58,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * 非异步的请求(存在坑,应该不是超过5秒的问题)
-     * @param url
+     * @param v
      */
-    public void inUIThread(String url) throws IOException {
+    public void doUIGet(View v) throws IOException {
         Request request = new Request.Builder()
-                .url(url)
+                .url("https://github.com/square/okhttp/blob/master/README.md")
                 .build();
 
         Response response = MyAppliction.getOkHttpClient().newCall(request).execute();
@@ -72,15 +76,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void doPost(View v){
 
-
         FormEncodingBuilder builder = new FormEncodingBuilder();
-        builder.add("username","张鸿洋");
+        builder.add("LoginID", "mjj");
+        builder.add("Password", MD5Util.encode("123456"));
+        builder.add("RoleType", "1");
+        builder.add("CheckState", "1");
+        builder.add("DeviceToken", "123123");
+
+//        Headers headers = new Headers.Builder().add()
+
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = sdf.format(new Date());
 
         Request request = new Request.Builder()
                 .url(URL)
+                .addHeader("UserId", UserId)
+                .addHeader("UserPassword", MD5Util.encode(UserPassword+time))
+                .addHeader("CurrentTime", time)
                 .post(builder.build())
                 .build();
-        MyAppliction.getOkHttpClient().newCall(request).enqueue(new Callback(){
+        Call call = MyAppliction.getOkHttpClient().newCall(request);
+        call.enqueue(new Callback() {
 
             @Override
             public void onFailure(Request request, IOException e) {
@@ -92,6 +109,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("asd", "data:" + response.body().string());
             }
         });
+
+
+    }
+
+    public void doUIPost(View v){
 
     }
 

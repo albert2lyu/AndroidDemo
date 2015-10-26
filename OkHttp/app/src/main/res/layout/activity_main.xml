@@ -7,16 +7,31 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="doGet"
+        android:text="异步Get"
         android:id="@+id/button"
         android:onClick="doGet"
          />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="同步Get"
+        android:id="@+id/button4"
+        android:onClick="doUIGet"
+        />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="doPost"
+        android:text="异步Post"
         android:id="@+id/button2"
         android:onClick="doPost"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="同步Post"
+        android:id="@+id/button3"
+        android:onClick="doUIPost"
         />
 </LinearLayout>
