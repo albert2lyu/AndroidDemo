@@ -10,6 +10,7 @@ import com.squareup.okhttp.CacheControl;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("asd", "onFailure");
                 //非UI线程
             }
+
             @Override
             public void onResponse(Response response) throws IOException {
                 //非UI线程
@@ -60,20 +62,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * 非异步的请求(存在坑,应该不是超过5秒的问题)
-     * @param v
-     */
-    public void doUIGet(View v) throws IOException {
-        Request request = new Request.Builder()
-                .url("https://github.com/square/okhttp/blob/master/README.md")
-                .build();
-
-        Response response = MyAppliction.getOkHttpClient().newCall(request).execute();
-
-        Log.i("asd", "data:" + response.body().string());
-    }
-
     public void doPost(View v){
 
         FormEncodingBuilder builder = new FormEncodingBuilder();
@@ -82,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
         builder.add("RoleType", "1");
         builder.add("CheckState", "1");
         builder.add("DeviceToken", "123123");
+
+
+        MultipartBuilder multipartBuilder = new MultipartBuilder();
 
 //        Headers headers = new Headers.Builder().add()
 
@@ -112,10 +103,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    /**
+     * 非异步的请求(在Android下不可用)
+     * @param v
+     */
+    public void doUIGet(View v) throws IOException {
+        Request request = new Request.Builder()
+                .url("https://github.com/square/okhttp/blob/master/README.md")
+                .build();
 
-    public void doUIPost(View v){
+        Response response = MyAppliction.getOkHttpClient().newCall(request).execute();
 
+        Log.i("asd", "data:" + response.body().string());
     }
+
+
+
 
 
 
