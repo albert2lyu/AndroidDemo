@@ -44,6 +44,7 @@ public abstract class OkHttpCallBack<T> implements Callback {
      */
     public T analyData(String body){
     	T Data;
+
     	if (mType == String.class)
         {
     		Data = (T)body;
@@ -84,31 +85,6 @@ public abstract class OkHttpCallBack<T> implements Callback {
 			{
 				final String body = response.body().string();
 
-				if(body.equals("[]")){
-					runOnUiThread(new Runnable() 
-					{
-		                @Override
-		                public void run() 
-		                {
-		                	onError(HttpErrorCode.NO_DATA,HttpErrorCode.getMessages(HttpErrorCode.NO_DATA));
-		                }
-					}
-			);
-					return;
-				}
-				
-				if(body.equals("false")){
-					runOnUiThread(new Runnable() 
-					{
-		                @Override
-		                public void run() 
-		                {
-		                	onError(HttpErrorCode.SERVER_ERROR,HttpErrorCode.getMessages(HttpErrorCode.SERVER_ERROR));
-		                }
-					});
-					return;
-				}
-				
 				final T data = analyData(body);
 				
 				runOnUiThread(new Runnable() 
@@ -142,7 +118,7 @@ public abstract class OkHttpCallBack<T> implements Callback {
         Type superclass = subclass.getGenericSuperclass();
         if (superclass instanceof Class)
         {
-            throw new RuntimeException("缺少类型参数（泛型）");
+			throw new RuntimeException("缺少类型参数（泛型）");
         }
         ParameterizedType parameterized = (ParameterizedType) superclass;
         return $Gson$Types.canonicalize(parameterized.getActualTypeArguments()[0]);

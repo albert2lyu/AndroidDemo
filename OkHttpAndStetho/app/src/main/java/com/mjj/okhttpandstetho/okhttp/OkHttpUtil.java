@@ -102,6 +102,14 @@ public class OkHttpUtil {
     }
 
     /**
+     * 异步执行POST请求,tag默认为url地址
+     */
+    public static void doPost(String url,String params, OkHttpCallBack callback,ProgressRequestBody.UpLoadProgressListener listener)
+    {
+        getInstance().enqueuePost(url, url, params, callback,listener);
+    }
+
+    /**
      * 异步执行POST请求
      */
     public static void doPost(String tag,String url,Map<String,String> params, OkHttpCallBack callback)
@@ -143,6 +151,19 @@ public class OkHttpUtil {
     private  void enqueuePost(String tag,String url,String paramJson,OkHttpCallBack callback)
     {
         RequestBody body = RequestBody.create(TYPE_DEFUALT,paramJson);
+
+        Request request = buildPost(tag, url, body);
+        asynchronous(request,callback);
+    }
+
+    /**
+     * 异步Post包含，含上传进度监听
+     */
+    private  void enqueuePost(String tag,String url,String paramJson,OkHttpCallBack callback,ProgressRequestBody.UpLoadProgressListener listener)
+    {
+        RequestBody body = RequestBody.create(TYPE_DEFUALT,paramJson);
+        body = ProgressHelper.addProgressRequestListener(body,listener);
+
         Request request = buildPost(tag, url, body);
         asynchronous(request,callback);
     }
