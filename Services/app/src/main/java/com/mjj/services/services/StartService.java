@@ -73,7 +73,6 @@ public class StartService extends Service {
         Message msg = mServiceHandler.obtainMessage();
         msg.arg1 = startId;
         mServiceHandler.sendMessage(msg);
-
         // If we get killed, after returning from here, restart
         return START_STICKY;
     }

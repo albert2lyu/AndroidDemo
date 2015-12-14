@@ -44,6 +44,7 @@ public class BindServiceActivity extends AppCompatActivity{
     {
         if(!isBind){
             Intent intent = new Intent(ActionOfService);
+            intent.setPackage(getPackageName());
             bindService(intent,sc, Context.BIND_AUTO_CREATE);
         }else{
             textView.setText(textView.getText()+"已经绑定服务\n");
@@ -55,7 +56,7 @@ public class BindServiceActivity extends AppCompatActivity{
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             isBind = true;
-            textView.setText(textView.getText()+"绑定服务成功！ "+name.toString()+"\n");
+            textView.setText(textView.getText()+"绑定服务成功！ "+name.toShortString()+"\n");
             simpleBinder = (StartService.SimpleBinder) service;
         }
 
