@@ -43,6 +43,7 @@ public class StartService extends Service {
             }
             // Stop the service using the startId, so that we don't stop
             // the service in the middle of handling another job
+//            按ID暂停
 //            stopSelf(msg.arg1);
         }
     }

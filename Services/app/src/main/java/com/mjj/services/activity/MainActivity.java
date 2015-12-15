@@ -66,4 +66,9 @@ public class MainActivity extends AppCompatActivity {
         stopService(new Intent(this, ForegroundService.class));
     }
 
+    public void alarmService(View v)
+    {
+        //发送广播
+        sendBroadcast(new Intent("startAlarmService"));
+    }
 }

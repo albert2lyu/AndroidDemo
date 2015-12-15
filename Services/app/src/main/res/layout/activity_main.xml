@@ -87,6 +87,17 @@
             android:onClick="endForegroundService"
             />
     </RelativeLayout>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="使用Alarm定时启动服务："/>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignParentRight="true"
+        android:text="定时自启服务"
+        android:onClick="alarmService"
+        />
 
 </LinearLayout>

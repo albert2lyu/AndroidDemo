@@ -64,6 +64,23 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".services.AlarmService"
+            android:exported="false"
+            >
+            <intent-filter>
+                <action android:name="com.mjj.services.Action.ALARM_SERVICE"/>
+                <category android:name="android.intent.category.default"/>
+            </intent-filter>
+        </service>
+
+
+        <receiver android:name=".broadcastreceiver.StartServiceReceiver">
+            <intent-filter>
+                <action android:name="startAlarmService"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
