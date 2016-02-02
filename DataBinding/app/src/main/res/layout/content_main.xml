@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="main"
+            type="com.mjj.databinding.bean.Main"/>
+        <variable
+            name="clickHandler"
+            type="com.mjj.databinding.activity.MainActivity.ClickHandler"/>
+    </data>
+    <merge>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{main.recyclerView}"
+            android:onClick="@{clickHandler.goToRecyclerView}"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{main.listView}"
+            android:onClick="@{clickHandler.goToListView}"
+            />
+    </merge >
+</layout>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DataBinding</string>
+    <string name="test">look ---- 测试静态方法调用，首字母大写</string>
+</resources>
